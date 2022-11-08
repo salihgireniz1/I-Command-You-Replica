@@ -57,8 +57,6 @@ public static class ObjectPooler
     /// <param name="queueObject">Object to reset.</param>
     public static void ResetObject(GameObject queueObject)
     {
-        LayerMask layerIndex = LayerMask.NameToLayer(defaultLayer);
-        queueObject.layer = layerIndex;
         queueObject.SetActive(false);
         queueObject.transform.localPosition = Vector3.zero;
         queueObject.GetComponent<Renderer>().material.color = Color.white;
