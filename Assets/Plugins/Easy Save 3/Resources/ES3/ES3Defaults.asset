@@ -29,10 +29,10 @@ MonoBehaviour:
     referenceMode: 2
     serializationDepthLimit: 64
     assemblyNames:
-    - Sirenix.OdinInspector.CompatibilityLayer
-    - Assembly-CSharp
     - Assembly-CSharp-firstpass
     - ToonyColorsPro2.Demo
+    - Assembly-CSharp
+    - Sirenix.OdinInspector.CompatibilityLayer
     - ToonyColorsPro.Runtime
     - Sirenix.OdinInspector.CompatibilityLayer.Editor
     - ToonyColorsPro.Editor
