@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public static class ObjectPooler
@@ -8,7 +9,8 @@ public static class ObjectPooler
     public static readonly string defaultLayer = "Cube";
     private static GameObject poolObject;
     private static float poolCount;
-
+    private static Transform parent;
+    private static int nameIndex = 0;
     /// <summary>
     /// Generate a certain number membered pool queue.
     /// </summary>
@@ -18,23 +20,37 @@ public static class ObjectPooler
     {
         poolCount = info.poolCount;
         poolObject = info.poolObject;
-
+        parent = holder;
         for (int i = 0; i < poolCount; i++)
         {
-            GameObject obj = MonoBehaviour.Instantiate(poolObject, holder);
-            obj.SetActive(false);
-            objectPool.Enqueue(obj);
+            InitializeObject();
         }
     }
 
+    /// <summary>
+    /// Instantiate an object and enqueue it to pool.
+    /// </summary>
+    public static void InitializeObject()
+    {
+        GameObject obj = MonoBehaviour.Instantiate(poolObject, parent);
+        obj.SetActive(false);
+        objectPool.Enqueue(obj);
+        obj.name = nameIndex.ToString();
+        nameIndex++;
+    }
     /// <summary>
     /// Get an object from pool and activate it.
     /// </summary>
     /// <returns>First member of pool queue.</returns>
     public static GameObject SpawnFromQueue()
     {
+
+        if (objectPool.Count == 0)
+        {
+            InitializeObject();
+        }
         GameObject obj = objectPool.Dequeue();
-        ResetObject(obj);
+
         obj.SetActive(true);
         return obj;
     }

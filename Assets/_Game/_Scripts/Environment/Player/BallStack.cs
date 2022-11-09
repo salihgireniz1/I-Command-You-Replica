@@ -33,12 +33,10 @@ public class BallStack : MonoBehaviour
             //Check if stack is empty and make player failed.
             if (activeBalls.Count == 0) return;
             int randomIndex = Random.Range(0, activeBalls.Count);
-            GameObject objToRemove = activeBalls[randomIndex];
+            GameObject objToRemove = activeBalls[activeBalls.Count - 1];
             activeBalls.Remove(objToRemove);
-            if(activeBalls.Count < ObjectPooler.objectPool.Count)
-            {
-                ObjectPooler.ResetObject(objToRemove);
-            }
+
+            ObjectPooler.ResetObject(objToRemove);
         }
     }
 }
