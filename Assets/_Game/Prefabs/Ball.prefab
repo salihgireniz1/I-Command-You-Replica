@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2265032401790400644}
   - component: {fileID: 2265032401790400646}
   - component: {fileID: -1261949543950825035}
+  - component: {fileID: -6088516960945822991}
   m_Layer: 3
   m_Name: Ball
   m_TagString: Untagged
@@ -124,3 +125,24 @@ MonoBehaviour:
   isAttacking: 0
   enemyLayer: EnemyBall
   searchRadius: 10
+--- !u!114 &-6088516960945822991
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2265032401790400641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1b6056e13862584bb1d1bb0f55d12fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ballLevel: 0
+  maxLevel: 5
+  levelColors:
+  - {r: 1, g: 0.45660377, b: 0.45660377, a: 0}
+  - {r: 1, g: 0.8692211, b: 0.45490193, a: 0}
+  - {r: 0.70284206, g: 1, b: 0.45490193, a: 0}
+  - {r: 0.45490193, g: 1, b: 0.90192366, a: 0}
+  - {r: 0.45490193, g: 0.58173966, b: 1, a: 0}
+  scaleGrowthAmount: 1.2
