@@ -12,15 +12,19 @@ public class BallStack : MonoBehaviour
     [SerializeField]
     private List<GameObject> activeBalls;
 
+    private void Start()
+    {
+        ActivateBalls(1);
+    }
+
     [Button("Activate Balls")]
     public void ActivateBalls(int amount)
     {
         for (int i = 0; i < amount; i++)
         {
             GameObject ball = ObjectPooler.SpawnFromQueue();
-            ball.GetComponent<Balls>().stackBase = this.transform;
+            ball.GetComponent<BallController>().StackBase = this.transform;
             ball.transform.Translate(Vector3.one);
-            // Handle ball default settings like assigning a default color etc.
 
             activeBalls.Add(ball);
         }

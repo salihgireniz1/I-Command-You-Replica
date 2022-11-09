@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dc07d32d19d945c4aa15d4d3642dc371, type: 3}
-  m_Name: 5
+  m_Name: 5Balls
   m_EditorClassIdentifier: 
   poolCount: 5
   poolObject: {fileID: 2265032401790400641, guid: bf5c97f0d7eb03f47abdd816a2991f12, type: 3}

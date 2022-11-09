@@ -11,10 +11,9 @@ GameObject:
   - component: {fileID: 2265032401790400642}
   - component: {fileID: 2265032401790400645}
   - component: {fileID: 2265032401790400644}
-  - component: {fileID: 2265032401790400643}
   - component: {fileID: 2265032401790400646}
-  - component: {fileID: 2265032401790400647}
-  m_Layer: 0
+  - component: {fileID: -1261949543950825035}
+  m_Layer: 3
   m_Name: Ball
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -86,19 +85,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &2265032401790400643
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2265032401790400641}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!195 &2265032401790400646
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -121,7 +107,7 @@ NavMeshAgent:
   m_BaseOffset: 0.5
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &2265032401790400647
+--- !u!114 &-1261949543950825035
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -130,7 +116,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 2265032401790400641}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be332b2859ebc644f8e7d8501f56e632, type: 3}
+  m_Script: {fileID: 11500000, guid: a010c574cce95fe44b8331079e36d3e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   stackBase: {fileID: 0}
+  enemyBall: {fileID: 0}
+  isAttacking: 0
+  enemyLayer: EnemyBall
+  searchRadius: 10
