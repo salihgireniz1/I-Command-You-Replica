@@ -13,8 +13,7 @@ public class BallStack : MonoSingleton<BallStack>
     private List<GameObject> activeBalls;
 
     int lowestLevelInStack = 1;
-    int maxAvailableLevel; 
-    Ball ball = new Ball();
+    Ball ball;
     private void Start()
     {
         ActivateBalls(1);
@@ -28,29 +27,52 @@ public class BallStack : MonoSingleton<BallStack>
         {
             GameObject ball = ObjectPooler.SpawnFromQueue();
             ball.GetComponent<BallController>().StackBase = this.transform;
-            ball.transform.Translate(Vector3.one);
+            ball.transform.localPosition = Random.insideUnitSphere;
             activeBalls.Add(ball);
         }
     }
     [Button("Deactivate Balls")]
-    public void DeactivateRandomBalls(int amount)
+    public void DeactivateBalls(int amount)
     {
         for (int i = 0; i < amount; i++)
         {
             //Check if stack is empty and make player failed.
             if (activeBalls.Count == 0) return;
             GameObject objToRemove = activeBalls[activeBalls.Count - 1];
-            activeBalls.Remove(objToRemove);
-
-            ObjectPooler.ResetObject(objToRemove);
+            DeactivateCertainBall(objToRemove);
         }
+    }
+    public void DeactivateCertainBall(GameObject ball)
+    {
+        if(activeBalls.Count == 0)
+        {
+            Debug.Log("Fail!");
+            return;
+        }
+
+        if (!activeBalls.Contains(ball))
+        {
+            Debug.Log(ball.transform.parent.childCount);
+            if (ball.transform.parent.childCount == 1)
+            {
+                Debug.Log("Win!");
+            }
+            Destroy(ball);
+            
+        }
+        else
+        {
+            activeBalls.Remove(ball);
+            ObjectPooler.ResetObject(ball);
+        }
+
     }
 
     [Button("Level Up Balls")]
     public void LevelUpBalls(int amount)
     {
         List<GameObject> ballsToUpgrade = GetLowestLevelBalls();
-        
+
         for (int i = 0; i < ballsToUpgrade.Count; i++)
         {
             ball = ballsToUpgrade[i].GetComponent<Ball>();
@@ -70,5 +92,13 @@ public class BallStack : MonoSingleton<BallStack>
             }
         }
         return lowestBalls;
+    }
+    [Button("Attack!")]
+    public void AttackEnemyStack()
+    {
+        foreach (var ball in activeBalls)
+        {
+            ball.GetComponent<BallController>().IsAttacking = true;
+        }
     }
 }

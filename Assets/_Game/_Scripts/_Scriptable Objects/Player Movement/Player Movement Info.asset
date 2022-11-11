@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f7faeb78a4692f40b6f47bd1dcb5c3f, type: 3}
   m_Name: Player Movement Info
   m_EditorClassIdentifier: 
-  movementSpeed: 3
-  responseTime: 0.25
+  swerveSpeed: 50
+  forwardSpeed: 800
+  responseTime: 0.01

@@ -1,18 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerBaseState : MonoBehaviour
+public abstract class PlayerBaseState
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public abstract void EnterState(PlayerStateMachine machine);
+    public abstract void UpdateState(PlayerStateMachine machine);
+    public abstract void TriggerState(PlayerStateMachine machine, Collider other);
 }

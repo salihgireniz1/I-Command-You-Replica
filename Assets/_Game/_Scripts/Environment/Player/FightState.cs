@@ -1,18 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
-public class FightState : MonoBehaviour
+public class FightState : PlayerBaseState
 {
-    // Start is called before the first frame update
-    void Start()
+    public override void EnterState(PlayerStateMachine machine)
     {
-        
+        //machine.stack.AttackEnemyStack();
+        machine.GetComponent<IHandleMovement>().CanMove = false;
+        CameraController.Instance.BattleView();
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void TriggerState(PlayerStateMachine machine, Collider other)
     {
-        
+
+    }
+
+    public override void UpdateState(PlayerStateMachine machine)
+    {
+
     }
 }

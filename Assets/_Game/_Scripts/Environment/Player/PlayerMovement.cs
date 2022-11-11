@@ -3,90 +3,59 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerMovement : MonoBehaviour, IHandleMovement
 {
-    #region Properties
-    public MovementInfo MovementInfo => movementInfo;
-
-    public Rigidbody Body => body;
-
+    public float SwerveSpeed => swerveSpeed;
+    public float ForwardSpeed => forwardSpeed;
     public bool CanMove
     {
         get => canMove;
         set => canMove = value;
     }
-    #endregion
-
-    #region Variables
 
     [SerializeField]
-    private MovementInfo movementInfo;
+    public float swerveSpeed;
+
+    [SerializeField]
+    public float forwardSpeed;
 
     [SerializeField]
     private bool canMove;
 
-    float swerveSpeed;
-    float smoothTime;
-    float forwardSpeed;
-    Vector3 velocity;
-
-    private Rigidbody body;
-
-    private Vector3 firstTouch = Vector3.zero;
-    private Vector3 lastTouch = Vector3.zero;
-    private Vector3 deltaTouch = Vector3.zero;
-    private Vector3 direction = Vector3.zero;
-    #endregion
-
-    #region MonoBehavior Callbacks
-    private void Awake()
+    Rigidbody body;
+    void Awake()
     {
         body = GetComponent<Rigidbody>();
-        GetMovementInfo();
-    }
-    #endregion
-
-    #region Methods
-
-    public void GetMovementInfo()
-    {
-        try
-        {
-            swerveSpeed = movementInfo.swerveSpeed;
-            smoothTime = movementInfo.responseTime;
-            forwardSpeed = movementInfo.forwardSpeed;
-        }
-        catch (System.NullReferenceException)
-        {
-            Debug.LogWarning($"{movementInfo} is null. Please insert one.");
-            swerveSpeed = 4f;
-            smoothTime = 0.4f;
-            forwardSpeed = 6f;
-        }
     }
 
-    public void Move()
+    /// <summary>
+    /// Handle swerving processes of object.
+    /// </summary>
+    /// <returns>Swerve amount on X-Axis.</returns>
+    public Vector3 SwerveAmount()
     {
-        if (!canMove) return;
+        if (!CanMove) return Vector3.zero;
 
-        if (Input.GetMouseButtonDown(0))
-        {
-            firstTouch = Input.mousePosition;
-        }
         if (Input.GetMouseButton(0))
         {
-            lastTouch = Input.mousePosition;
-            firstTouch = Vector3.SmoothDamp(firstTouch, lastTouch, ref velocity, smoothTime);
-
-            deltaTouch = lastTouch - firstTouch;
-            direction = new Vector3(deltaTouch.x, 0f, 0f);
-            body.velocity = direction * swerveSpeed * Time.fixedDeltaTime;
-            if (body.velocity != Vector3.zero)
-                body.rotation = Quaternion.LookRotation(body.velocity);
+            float xVelocity = Input.GetAxis("Mouse X") * swerveSpeed * Time.fixedDeltaTime;
+            return new Vector3(xVelocity, 0f, 0f);
         }
-        else if (body.velocity != Vector3.zero)
+        else
         {
-            // Stop the player. Do not allow fixedupdate to miss this.
-            body.velocity = Vector3.zero;
+            // Prevent slippery movement.
+            return Vector3.zero;
         }
     }
-    #endregion
+    public Vector3 ForwardAmount()
+    {
+        if (!CanMove) return Vector3.zero;
+
+        float zVelocity = forwardSpeed * Time.fixedDeltaTime;
+        Vector3 velocity = new Vector3(0f, 0f, zVelocity);
+        return velocity;
+    }
+
+    private void FixedUpdate()
+    {
+        body.velocity = SwerveAmount() + ForwardAmount();
+    }
 }

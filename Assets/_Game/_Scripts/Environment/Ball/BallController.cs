@@ -28,30 +28,74 @@ public class BallController : MonoBehaviour
     
     [SerializeField]
     private float searchRadius;
+    
+    [SerializeField]
+    private float attackMoveSpeed;
+    
+    [SerializeField]
+    private float defaultMoveSpeed;
 
-
+    Ball ball;
     NavMeshAgent agent;
     Collider[] nearEnemies;
     float distance;
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
+        ball = GetComponent<Ball>();
     }
     private void Update()
     {
         if (isAttacking)
         {
-            FindClosestEnemy();
+            Attack();
+        }
+        else
+        {
+            StayOnCenter();
+        }
+    }
 
-            if (enemyBall != null && enemyBall.gameObject.activeInHierarchy)
+    /// <summary>
+    /// Try to stay on stack and move through its center.
+    /// </summary>
+    public void StayOnCenter()
+    {
+        if (agent.speed != defaultMoveSpeed)
+        {
+            agent.speed = defaultMoveSpeed;
+        }
+        agent.SetDestination(stackBase.position);
+    }
+
+    /// <summary>
+    /// Handle battle behaviour.
+    /// </summary>
+    public void Attack()
+    {
+        FindClosestEnemy();
+
+        if (enemyBall != null && enemyBall.gameObject.activeInHierarchy)
+        {
+            agent.SetDestination(enemyBall.position);
+            if (agent.speed != attackMoveSpeed)
             {
-                agent.SetDestination(enemyBall.position);
+                agent.speed = attackMoveSpeed;
+            }
+            if (CollapsedWithEnemy(4))
+            {
+                ball.GetDamage(enemyBall.GetComponent<Ball>().ballLevel);
+                if (enemyBall.GetComponent<BallController>().enemyBall != transform)
+                {
+                    enemyBall.GetComponent<Ball>().GetDamage(ball.ballLevel);
+                }
             }
         }
         else
         {
-            agent.SetDestination(stackBase.position);
+            StayOnCenter();
         }
+        
     }
 
     /// <summary>

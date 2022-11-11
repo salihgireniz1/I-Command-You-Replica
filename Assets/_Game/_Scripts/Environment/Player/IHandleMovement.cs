@@ -1,14 +1,11 @@
-﻿using UnityEngine;
+﻿using Unity.VisualScripting;
+using UnityEngine;
 
 internal interface IHandleMovement
 {
-    MovementInfo MovementInfo { get; }
-
-    Rigidbody Body { get; }
-
-    bool CanMove { get; set; }
-
-    void GetMovementInfo();
-
-    void Move();
+    public float SwerveSpeed { get; }
+    public float ForwardSpeed { get; }
+    public bool CanMove { get; set; }
+    Vector3 SwerveAmount();
+    Vector3 ForwardAmount();
 }

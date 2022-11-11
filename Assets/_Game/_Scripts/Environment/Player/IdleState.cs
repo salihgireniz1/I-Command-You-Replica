@@ -1,18 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class IdleState : MonoBehaviour
+public class IdleState : PlayerBaseState
 {
-    // Start is called before the first frame update
-    void Start()
+    public override void EnterState(PlayerStateMachine machine)
     {
-        
+        machine.GetComponent<IHandleMovement>().CanMove = false;
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void TriggerState(PlayerStateMachine machine, Collider other)
     {
-        
+
+    }
+
+    public override void UpdateState(PlayerStateMachine machine)
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            machine.SwitchState(machine.walkingState);
+        }
     }
 }
