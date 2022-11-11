@@ -44,28 +44,26 @@ public class BallStack : MonoSingleton<BallStack>
     }
     public void DeactivateCertainBall(GameObject ball)
     {
-        if(activeBalls.Count == 0)
-        {
-            Debug.Log("Fail!");
-            return;
-        }
 
-        if (!activeBalls.Contains(ball))
-        {
-            Debug.Log(ball.transform.parent.childCount);
-            if (ball.transform.parent.childCount == 1)
-            {
-                Debug.Log("Win!");
-            }
-            Destroy(ball);
-            
-        }
-        else
+        if (activeBalls.Contains(ball))
         {
             activeBalls.Remove(ball);
-            ObjectPooler.ResetObject(ball);
+        }
+        if (activeBalls.Count == 0)
+        {
+            Debug.Log("Fail!");
+            CameraController.Instance.isFollowing = false;
+            UIManager.Instance.LosePanel();
         }
 
+        if (ball.transform.parent.childCount == 1)
+        {
+            Debug.Log("Win!");
+            UIManager.Instance.WinPanel();
+        }
+
+        ball.transform.parent = null;
+        ObjectPooler.ResetObject(ball);
     }
 
     [Button("Level Up Balls")]
@@ -86,7 +84,7 @@ public class BallStack : MonoSingleton<BallStack>
         List<GameObject> lowestBalls = new List<GameObject>();
         for (int i = 0; i < activeBalls.Count; i++)
         {
-            if (activeBalls[i].GetComponent<Ball>().ballLevel == lowestLevelInStack)
+            if (activeBalls[i].GetComponent<Ball>().BallLevel == lowestLevelInStack)
             {
                 lowestBalls.Add(activeBalls[i]);
             }

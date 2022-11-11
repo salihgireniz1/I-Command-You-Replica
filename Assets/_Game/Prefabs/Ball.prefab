@@ -98,7 +98,7 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 4
-  m_Acceleration: 200
+  m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 0
   m_StoppingDistance: 0
@@ -125,9 +125,10 @@ MonoBehaviour:
   enemyBall: {fileID: 0}
   isAttacking: 0
   enemyLayer: EnemyBall
-  searchRadius: 100
+  searchRadius: 200
   attackMoveSpeed: 15
-  defaultMoveSpeed: 2
+  defaultMoveSpeed: 1
+  collapseDistance: 1.5
 --- !u!114 &-6088516960945822991
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -141,20 +142,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startLevel: 1
-  ballLevel: 0
+  maxLevel: 5
+  scaleGrowthAmount: 1.4
+  colorCanChange: 0
   levelColors:
   - {r: 0.45490193, g: 0.81152254, b: 1, a: 0}
-  - {r: 0.454902, g: 0.8117648, b: 1, a: 0}
-  - {r: 0.454902, g: 0.8117648, b: 1, a: 0}
-  - {r: 0.454902, g: 0.8117648, b: 1, a: 0}
-  - {r: 0.454902, g: 0.8117648, b: 1, a: 0}
-  PopParticles:
-  - {fileID: 1623280093043294, guid: 592d06350487a0942a84222a68acfd27, type: 3}
-  - {fileID: 1159604064903072, guid: 7ae9d0882e978574a9a97b5049c622f8, type: 3}
-  - {fileID: 1891419534480812, guid: a9bb025ee066fe848bfdf2fb17613ad4, type: 3}
-  - {fileID: 1475206537000770, guid: 50bdf17a8ac3d2540a5a16af212ec203, type: 3}
-  - {fileID: 1904920445499108, guid: 0bbbc69132553c54ba23bc6c0b92d1b7, type: 3}
-  scaleGrowthAmount: 1.25
+  - {r: 0.45490193, g: 1, b: 0.714312, a: 0}
+  - {r: 0.974418, g: 1, b: 0.45490193, a: 0}
+  - {r: 1, g: 0.45490193, b: 0.62828594, a: 0}
+  - {r: 0.78188145, g: 0.45490193, b: 1, a: 0}
 --- !u!135 &5028265631185926341
 SphereCollider:
   m_ObjectHideFlags: 0

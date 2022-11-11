@@ -3,25 +3,33 @@ using UnityEngine;
 
 public class Ball : MonoBehaviour
 {
-    public int MaxLevel => levelColors.Count;
+    public int MaxLevel => maxLevel;
+    public int BallLevel { get; private set; }
 
     [Range(1, 5)]
     public int startLevel = 1;
 
-    public int ballLevel;
+    [SerializeField]
+    private int maxLevel;
 
-    public List<Color> levelColors;
-    public List<GameObject> PopParticles;
-    public float scaleGrowthAmount;
+    [SerializeField]
+    private float scaleGrowthAmount;
+    
+    [SerializeField]
+    private bool colorCanChange = false;
+
+    [SerializeField]
+    private List<Color> levelColors;
+
 
     Renderer rend;
     private void OnEnable()
     {
         rend = GetComponent<Renderer>();
-        ballLevel = startLevel;
-        rend.material.color = levelColors[ballLevel-1];
+        BallLevel = startLevel;
+        if (colorCanChange) rend.material.color = levelColors[BallLevel - 1];
 
-        LevelUp(ballLevel - 1);
+        LevelUp(BallLevel - 1);
     }
 
     /// <summary>
@@ -32,9 +40,9 @@ public class Ball : MonoBehaviour
     {
         for (int i = 0; i < amount; i++)
         {
-            if (ballLevel >= MaxLevel) return;
-            ballLevel++;
-            rend.material.color = levelColors[ballLevel - 1];
+            if (BallLevel >= MaxLevel) return;
+            BallLevel++;
+            if (colorCanChange) rend.material.color = levelColors[BallLevel - 1];
             transform.localScale *= scaleGrowthAmount;
         }
     }
@@ -47,15 +55,15 @@ public class Ball : MonoBehaviour
     {
         for (int i = 0; i < damageAmount; i++)
         {
-            if (ballLevel <= 1)
+            if (BallLevel <= 1)
             {
                 // Handle Destruction.
                 BallStack.Instance.DeactivateCertainBall(this.gameObject);
             }
             else
             {
-                ballLevel--;
-                rend.material.color = levelColors[ballLevel - 1];
+                BallLevel--;
+                if (colorCanChange) rend.material.color = levelColors[BallLevel - 1];
                 transform.localScale /= scaleGrowthAmount;
             }
         }

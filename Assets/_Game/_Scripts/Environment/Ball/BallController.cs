@@ -22,18 +22,21 @@ public class BallController : MonoBehaviour
 
     [SerializeField]
     private bool isAttacking;
-    
+
     [SerializeField]
     private string enemyLayer;
-    
+
     [SerializeField]
     private float searchRadius;
-    
+
     [SerializeField]
     private float attackMoveSpeed;
-    
+
     [SerializeField]
     private float defaultMoveSpeed;
+
+    [SerializeField]
+    private float collapseDistance;
 
     Ball ball;
     NavMeshAgent agent;
@@ -82,20 +85,18 @@ public class BallController : MonoBehaviour
             {
                 agent.speed = attackMoveSpeed;
             }
-            if (CollapsedWithEnemy(4))
+            if (CollapsedWithEnemy(collapseDistance * transform.localScale.x))
             {
-                ball.GetDamage(enemyBall.GetComponent<Ball>().ballLevel);
-                if (enemyBall.GetComponent<BallController>().enemyBall != transform)
-                {
-                    enemyBall.GetComponent<Ball>().GetDamage(ball.ballLevel);
-                }
+                ball.GetDamage(enemyBall.GetComponent<Ball>().BallLevel);
+
+                enemyBall.GetComponent<Ball>().GetDamage(ball.BallLevel);
             }
         }
         else
         {
             StayOnCenter();
         }
-        
+
     }
 
     /// <summary>
@@ -123,9 +124,9 @@ public class BallController : MonoBehaviour
     /// <returns>True if enemy is close enough.</returns>
     public bool CollapsedWithEnemy(float hitDistance)
     {
-        if(enemyBall != null)
+        if (enemyBall != null)
         {
-            if(Vector3.Distance(transform.position, enemyBall.position) <= hitDistance)
+            if (Vector3.Distance(transform.position, enemyBall.position) <= hitDistance)
             {
                 return true;
             }

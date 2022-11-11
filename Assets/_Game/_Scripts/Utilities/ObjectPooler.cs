@@ -18,6 +18,7 @@ public static class ObjectPooler
     /// <param name="holder">Parent/holder of spawned cubes.</param>
     public static void GeneratePool(PoolInfo info, Transform holder)
     {
+        objectPool = new Queue<GameObject>();
         poolCount = info.poolCount;
         poolObject = info.poolObject;
         parent = holder;
@@ -77,6 +78,7 @@ public static class ObjectPooler
         queueObject.transform.localPosition = Vector3.zero;
         queueObject.GetComponent<Renderer>().material.color = Color.white;
         queueObject.transform.localRotation = Quaternion.Euler(Vector3.zero);
+        queueObject.transform.parent = parent;
         objectPool.Enqueue(queueObject);
     }
 }
